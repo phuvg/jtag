@@ -32,7 +32,7 @@ module tb_jtag;
     //-----------------------
     //dmi register
     logic                       dmi_ack;
-    logic                       dmi_op;
+    logic       [1:0]           dmi_op;
     logic       [31:0]          dmi_rdata;
     logic                       dmi_rdata_valid;
     logic       [31:0]          dmi_addr;
@@ -127,7 +127,7 @@ module tb_jtag;
         #(5*JTAG_CYCLE) dmi_response(2'b00, 32'h0);
 
         //dmi - read
-        #(2*JTAG_CYCLE) cmd_dmi({32'h12, 32'h8c, 2'h1});
+        #(2*JTAG_CYCLE) cmd_dmi({32'h12, 32'h40, 2'h1});
         #(5*JTAG_CYCLE) dmi_response(2'b00, 32'h123);
 
         //dmi - nop

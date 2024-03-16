@@ -18,7 +18,7 @@ module jtag(
 
     //dmi register
     input                   dmi_ack_i,
-    input                   dmi_op_i,
+    input           [1:0]   dmi_op_i,
     input           [31:0]  dmi_rdata_i,
     input                   dmi_rdata_valid_i,
     output  logic   [31:0]  dmi_addr_o,
@@ -122,8 +122,8 @@ module jtag(
     logic           [65:0]                          update_out_dmi;
     logic           [65:0]                          nx_update_out_dmi;
 
-    logic           [31:0]                          dmi_reg_in;
-    logic           [31:0]                          dmi_reg_in_lat;
+    logic           [65:0]                          dmi_reg_in;
+    logic           [65:0]                          dmi_reg_in_lat;
 
     //dm interface
     logic                                           dmi_rdata_valid_lat;

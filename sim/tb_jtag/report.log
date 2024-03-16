@@ -1,5 +1,5 @@
 # vsim -c -l report.log -voptargs="+acc" -do "run -all" work.tb_jtag 
-# Start time: 12:07:44 on Mar 16,2024
+# Start time: 16:33:14 on Mar 16,2024
 # ** Note: (vsim-3813) Design is being optimized due to module recompilation...
 # 
 # //  Questa Sim-64
@@ -23,5 +23,5 @@
 # run -all
 # ** Note: $finish    : ../../tb/tb_jtag.sv(137)
 #    Time: 27500 ns  Iteration: 0  Instance: /tb_jtag
-# End time: 12:07:45 on Mar 16,2024, Elapsed time: 0:00:01
+# End time: 16:33:14 on Mar 16,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0

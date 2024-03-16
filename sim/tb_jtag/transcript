@@ -15,35 +15,15 @@
 # //
 # wf_jtag.wlf opened as dataset "wf_jtag"
 do D:/proj/verilog/jtag/sim/tb_jtag/wave.do
-add wave -position end  wf_jtag:/tb_jtag/i_jtag/shift_dr
+dataset reload -f
+# wf_jtag:/tb_jtag
 dataset reload -f
 # wf_jtag:/tb_jtag/i_jtag
 dataset reload -f
 # wf_jtag:/tb_jtag/i_jtag
 dataset reload -f
-# wf_jtag:/tb_jtag
-add wave -position end  wf_jtag:/tb_jtag/tdo_5bit
+# wf_jtag:/tb_jtag/i_jtag
 dataset reload -f
-# wf_jtag:/tb_jtag
+# wf_jtag:/tb_jtag/i_jtag
 dataset reload -f
-# wf_jtag:/tb_jtag
-dataset reload -f
-# wf_jtag:/tb_jtag
-dataset reload -f
-# wf_jtag:/tb_jtag
-add wave -position end  wf_jtag:/tb_jtag/tdo_66bit
-dataset reload -f
-# wf_jtag:/tb_jtag
-dataset reload -f
-# wf_jtag:/tb_jtag
-dataset reload -f
-# wf_jtag:/tb_jtag
-dataset reload -f
-# wf_jtag:/tb_jtag
-dataset reload -f
-# wf_jtag:/tb_jtag
-dataset reload -f
-# wf_jtag:/tb_jtag
-dataset reload -f
-# wf_jtag:/tb_jtag
-write format wave -window .main_pane.wave.interior.cs.body.pw.wf D:/proj/verilog/jtag/sim/tb_jtag/wave.do
+# wf_jtag:/tb_jtag/i_jtag
