@@ -138,6 +138,7 @@ module jtag(
 
     //output - tdo
     logic                                           nx_tdo;
+    logic                                           nx_tdo_enable;
 
 
     ////////////////////////////////////////////////////////////////////////////
@@ -275,7 +276,7 @@ module jtag(
     //DR - data register - DMI
     assign dmi_reg_in = (select_dmi & ~dmi_we_o) ? {dmi_addr_o, rdata, dmi_op_i} :
                         (select_dmi & dmi_we_o) ? {dmi_addr_o, dmi_wdata_o, dmi_op_i} : dmi_reg_in_lat;
-    assign nx_shift_out_dm = shift_dmi ? {jtag_tdi_i, shift_out_dmi[65:1]} :
+    assign nx_shift_out_dmi = shift_dmi ? {jtag_tdi_i, shift_out_dmi[65:1]} :
                              capture_dmi ? dmi_reg_in : shift_out_dmi;
     always_ff @(posedge jtag_tck_i or negedge jtag_trstn_i) begin
         if(~jtag_trstn_i) begin
@@ -318,15 +319,16 @@ module jtag(
     end
     assign dmi_rdata_valid_rising_edgedet = dmi_rdata_valid_i & ~dmi_rdata_valid_lat;
 
-    assign nx_rdata = (dmi_rdata_valid_rising_edgedet & dmi_we_o) ? dmi_rdata_i : rdata;
+    assign nx_rdata = (dmi_rdata_valid_rising_edgedet & ~dmi_we_o) ? dmi_rdata_i : rdata;
     always_ff @(posedge jtag_tck_i or negedge jtag_trstn_i) begin
         if(~jtag_trstn_i) begin
             rdata <= 32'h0;
         end else begin
-            rdata <= dmi_rdata_i;
+            rdata <= nx_rdata;
         end
     end
 
+    assign dmi_addr_o = update_out_dmi[65:34];
     assign dmi_wdata_o = update_out_dmi[33:2];
     assign dmi_we_o = update_out_dmi[1];
 
@@ -338,7 +340,7 @@ module jtag(
         end
     end
     assign req_clr = dmi_ack_i & ~dmi_ack_lat;
-    assign req_set = update_dmi & dmi_ack_i;
+    assign req_set = update_dmi;
     assign nx_req = req_clr ? 1'b0 : 
                     req_set ? 1'b1 : dmi_req_o;
     always_ff @(posedge jtag_tck_i or negedge jtag_trstn_i) begin
@@ -363,5 +365,12 @@ module jtag(
         end
     end
 
-    assign jtag_tdo_enable_o = (cr_state == STATE_SHIFT_IR || cr_state == STATE_SHIFT_DR) ? 1'b1 : 1'b0;
+    assign nx_tdo_enable = (cr_state == STATE_SHIFT_IR || cr_state == STATE_SHIFT_DR) ? 1'b1 : 1'b0;
+    always_ff @(posedge tckn or negedge jtag_trstn_i) begin
+        if(~jtag_trstn_i) begin
+            jtag_tdo_enable_o <= 1'b0;
+        end else begin
+            jtag_tdo_enable_o <= nx_tdo_enable;
+        end
+    end
 endmodule
